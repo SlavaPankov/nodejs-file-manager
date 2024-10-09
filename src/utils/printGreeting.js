@@ -13,16 +13,21 @@ const printGreeting = (isExit = false) => {
         }
         
         const username = argv.slice(2)[0].split('=')[1];
+
+        if (!username) {
+            throw new Error('You should pass your username');
+        }
     
         if (isExit) {
             console.log(`Thank you for using File Manager, ${username}, goodbye!`)
             exit();
         } 
 
-        console.log(`Welcome to the File Manager, ${username}n\n`);
+        console.log(`Welcome to the File Manager, ${username}\n`);
         env.USERNAME = username;
     } catch (error) {
         console.error(error.message);
+        exit(1);
     }
 };
 
