@@ -6,15 +6,13 @@ const handleUpCommand = () => {
     const parentDir = dirname(currentDir);
 
     if (currentDir === parentDir) {
-        console.log('You are already in the root directory.');
         return;
     }
 
     try {
         process.chdir(parentDir);
     } catch (error) {
-        console.error(error.message);
-        process.exit();
+        throw error;
     }
 };
 

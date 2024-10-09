@@ -1,3 +1,4 @@
+import printWorkingDirectory from './utils/printWorkingDirectory.js';
 import handleUpCommand from "./utils/handleUpCommand.js";
 import printGreeting from "./utils/printGreeting.js";
 import process from 'node:process';
@@ -9,19 +10,17 @@ printGreeting();
 const initailDir = os.homedir();
 process.chdir(initailDir);
 
+printWorkingDirectory();
 process.stdin.on('data', (input) => {
     const command = input.toString().trim();
 
     if (command === 'up') {
         handleUpCommand();
-    }
-
-    if (command === 'where') {
-        console.log(`${process.cwd()}\n`);
-    }
- 
-    if (command === '.exit') {
+        printWorkingDirectory();
+    } else if (command === '.exit') {
         printGreeting(true);
+    } else {
+        console.log('Invalid input\n');
     }
 });
 
