@@ -5,7 +5,8 @@ import process from 'node:process';
 import os from 'node:os';
 import handleCdCommand from './utils/handleCdCommand.js';
 import handleLsCommand from './utils/handleLsCommand.js';
-import handleCatCommand from './handleCatCommand.js';
+import handleCatCommand from './utils/handleCatCommand.js';
+import handleAddCommand from './utils/handleAddCommand.js';
 
 process.stdin.resume();
 printGreeting();
@@ -44,6 +45,14 @@ process.stdin.on('data', async (input) => {
             console.error(error);
         }
         
+        printWorkingDirectory();
+    }  else if (command === 'add') {
+        try {
+            handleAddCommand(arg);
+        } catch (error) {
+            console.error(error);
+        }
+
         printWorkingDirectory();
     } else if (command === '.exit') {
         printGreeting(true);
