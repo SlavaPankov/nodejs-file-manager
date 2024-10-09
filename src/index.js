@@ -4,6 +4,7 @@ import printGreeting from "./utils/printGreeting.js";
 import process from 'node:process';
 import os from 'node:os';
 import handleCdCommand from './utils/handleCdCommand.js';
+import handleLsCommand from './utils/handleLsCommand.js';
 
 process.stdin.resume();
 printGreeting();
@@ -26,6 +27,14 @@ process.stdin.on('data', async (input) => {
             console.error(error);
         }
         
+        printWorkingDirectory();
+    } else if (command === 'ls') {
+        try {
+            await handleLsCommand();
+        } catch (error) {
+            console.error(error);
+        }
+
         printWorkingDirectory();
     } else if (command === '.exit') {
         printGreeting(true);
