@@ -10,6 +10,7 @@ import handleAddCommand from './utils/handleAddCommand.js';
 import handleRnCommand from './utils/handleRnCommnad.js';
 import handleCpCommand from './utils/handleCpCommand.js';
 import handleMvCommand from './utils/handleMvCommand.js';
+import handleRmCommand from './utils/handleRmCommand.js';
 
 process.stdin.resume();
 printGreeting();
@@ -76,6 +77,14 @@ process.stdin.on('data', async (input) => {
     } else if (command === 'mv') {
         try {
             await handleMvCommand(firstArg, secondArg);
+        } catch (error) {
+            console.error(error);
+        }
+
+        printWorkingDirectory();
+    } else if (command === 'rm') {
+        try {
+            await handleRmCommand(firstArg);
         } catch (error) {
             console.error(error);
         }
