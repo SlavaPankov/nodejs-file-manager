@@ -8,6 +8,7 @@ import handleLsCommand from './utils/handleLsCommand.js';
 import handleCatCommand from './utils/handleCatCommand.js';
 import handleAddCommand from './utils/handleAddCommand.js';
 import handleRnCommand from './utils/handleRnCommnad.js';
+import handleCpCommand from './utils/handleCpCommand.js';
 
 process.stdin.resume();
 printGreeting();
@@ -57,7 +58,13 @@ process.stdin.on('data', async (input) => {
         printWorkingDirectory();
     } else if (command === 'rn') {
         try {
-            handleRnCommand(firstArg, secondArg);
+            await handleRnCommand(firstArg, secondArg);
+        } catch (error) {
+            console.error(error);
+        }
+    } else if (command === 'cp') {
+        try {
+            await handleCpCommand(firstArg, secondArg);
         } catch (error) {
             console.error(error);
         }
