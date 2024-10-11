@@ -9,6 +9,7 @@ import handleCatCommand from './utils/handleCatCommand.js';
 import handleAddCommand from './utils/handleAddCommand.js';
 import handleRnCommand from './utils/handleRnCommnad.js';
 import handleCpCommand from './utils/handleCpCommand.js';
+import handleMvCommand from './utils/handleMvCommand.js';
 
 process.stdin.resume();
 printGreeting();
@@ -62,12 +63,24 @@ process.stdin.on('data', async (input) => {
         } catch (error) {
             console.error(error);
         }
+
+        printWorkingDirectory();
     } else if (command === 'cp') {
         try {
             await handleCpCommand(firstArg, secondArg);
         } catch (error) {
             console.error(error);
         }
+
+        printWorkingDirectory();
+    } else if (command === 'mv') {
+        try {
+            await handleMvCommand(firstArg, secondArg);
+        } catch (error) {
+            console.error(error);
+        }
+
+        printWorkingDirectory();
     } else if (command === '.exit') {
         printGreeting(true);
     } else {
