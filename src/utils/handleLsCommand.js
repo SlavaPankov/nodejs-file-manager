@@ -8,7 +8,6 @@ export const handleLsCommand = async () => {
         const filesInDirectory = files.filter((file) => !file.isDirectory()).sort()
         const sortedDirectoryContent = [...directories, ...filesInDirectory].map((item, index) => ({ Name: item.name, Type: item.isDirectory() ? 'directory' : 'file'  }));
 
-        console.log(directories);
         console.table(sortedDirectoryContent);
     } catch (error) {
         throw error;

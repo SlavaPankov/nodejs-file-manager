@@ -1,5 +1,6 @@
 import { createReadStream } from 'node:fs';
 import { resolve } from 'node:path';
+import printWorkingDirectory from './printWorkingDirectory.js';
 
 const handleCatCommand = (path) => {
     try {
@@ -13,6 +14,7 @@ const handleCatCommand = (path) => {
 
         stream.on('error', (error) => {
             console.log(error);
+            printWorkingDirectory();
         });
     } catch (error) {
         throw error;
