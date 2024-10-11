@@ -7,6 +7,7 @@ import handleCdCommand from './utils/handleCdCommand.js';
 import handleLsCommand from './utils/handleLsCommand.js';
 import handleCatCommand from './utils/handleCatCommand.js';
 import handleAddCommand from './utils/handleAddCommand.js';
+import handleRnCommand from './utils/handleRnCommnad.js';
 
 process.stdin.resume();
 printGreeting();
@@ -17,14 +18,14 @@ process.chdir(initailDir);
 printWorkingDirectory();
 process.stdin.on('data', async (input) => {
     const trimmedInput = input.toString().trim();
-    const [command, arg] = trimmedInput.split(' ');
+    const [command, firstArg, secondArg] = trimmedInput.split(' ');
 
     if (command === 'up') {
         handleUpCommand();
         printWorkingDirectory();
     } else if (command === 'cd') {
         try {
-            await handleCdCommand(arg);
+            await handleCdCommand(firstArg);
         } catch (error) {
             console.error(error);
         }
@@ -40,7 +41,7 @@ process.stdin.on('data', async (input) => {
         printWorkingDirectory();
     } else if (command === 'cat') {
         try {
-            handleCatCommand(arg);
+            handleCatCommand(firstArg);
         } catch (error) {
             console.error(error);
         }
@@ -48,12 +49,18 @@ process.stdin.on('data', async (input) => {
         printWorkingDirectory();
     }  else if (command === 'add') {
         try {
-            handleAddCommand(arg);
+            handleAddCommand(firstArg);
         } catch (error) {
             console.error(error);
         }
 
         printWorkingDirectory();
+    } else if (command === 'rn') {
+        try {
+            handleRnCommand(firstArg, secondArg);
+        } catch (error) {
+            console.error(error);
+        }
     } else if (command === '.exit') {
         printGreeting(true);
     } else {
