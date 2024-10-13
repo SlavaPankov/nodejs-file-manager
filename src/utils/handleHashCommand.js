@@ -3,6 +3,10 @@ import { createHash } from 'node:crypto';
 import { createReadStream } from 'node:fs';
 
 const handleHashCommand = async (filePath) => {
+    if (!filePath) {
+        throw new Error('Operation failed');
+    }
+
     const absoluteFilePath = resolve(filePath);
 
     try {
