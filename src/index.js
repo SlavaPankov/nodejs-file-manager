@@ -12,6 +12,7 @@ import handleCpCommand from './utils/handleCpCommand.js';
 import handleMvCommand from './utils/handleMvCommand.js';
 import handleRmCommand from './utils/handleRmCommand.js';
 import handleOsCommand from './utils/handleOsCommand.js';
+import handleHashCommand from './utils/handleHashCommand.js';
 
 process.stdin.resume();
 printGreeting();
@@ -55,6 +56,9 @@ process.stdin.on('data', async (input) => {
                 break;
             case 'os':
                 handleOsCommand(firstArg);
+                break;
+            case 'hash':
+                await handleHashCommand(firstArg);
                 break;
             case '.exit':
                 printGreeting(true);
