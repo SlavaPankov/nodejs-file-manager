@@ -11,6 +11,7 @@ import handleRnCommand from './utils/handleRnCommnad.js';
 import handleCpCommand from './utils/handleCpCommand.js';
 import handleMvCommand from './utils/handleMvCommand.js';
 import handleRmCommand from './utils/handleRmCommand.js';
+import handleOsCommand from './utils/handleOsCommand.js';
 
 process.stdin.resume();
 printGreeting();
@@ -23,78 +24,52 @@ process.stdin.on('data', async (input) => {
     const trimmedInput = input.toString().trim();
     const [command, firstArg, secondArg] = trimmedInput.split(' ');
 
-    if (command === 'up') {
-        handleUpCommand();
-        printWorkingDirectory();
-    } else if (command === 'cd') {
-        try {
-            await handleCdCommand(firstArg);
-        } catch (error) {
-            console.error(error);
-        }
-        
-        printWorkingDirectory();
-    } else if (command === 'ls') {
-        try {
-            await handleLsCommand();
-        } catch (error) {
-            console.error(error);
-        }
-        
-        printWorkingDirectory();
-    } else if (command === 'cat') {
-        try {
-            handleCatCommand(firstArg);
-        } catch (error) {
-            console.error(error);
-        }
-        
-        printWorkingDirectory();
-    }  else if (command === 'add') {
-        try {
-            handleAddCommand(firstArg);
-        } catch (error) {
-            console.error(error);
+    try {
+        switch (command) {
+            case 'up':
+                handleUpCommand();
+                break;
+            case 'cd':
+                await handleCdCommand(firstArg);
+                break;
+            case 'ls':
+                await handleLsCommand();
+                break;
+            case 'cat':
+                handleCatCommand(firstArg);
+                break;
+            case 'add':
+                handleAddCommand(firstArg);
+                break;
+            case 'rn':
+                await handleRnCommand(firstArg, secondArg);
+                break;
+            case 'cp':
+                await handleCpCommand(firstArg, secondArg);
+                break;
+            case 'mv':
+                await handleMvCommand(firstArg, secondArg);
+                break;
+            case 'rm':
+                await handleRmCommand(firstArg);
+                break;
+            case 'os':
+                handleOsCommand(firstArg);
+                break;
+            case '.exit':
+                printGreeting(true);
+
+                break;
+            default:
+                console.log('Invalid input\n');
+                break;
         }
 
-        printWorkingDirectory();
-    } else if (command === 'rn') {
-        try {
-            await handleRnCommand(firstArg, secondArg);
-        } catch (error) {
-            console.error(error);
-        }
-
-        printWorkingDirectory();
-    } else if (command === 'cp') {
-        try {
-            await handleCpCommand(firstArg, secondArg);
-        } catch (error) {
-            console.error(error);
-        }
-
-        printWorkingDirectory();
-    } else if (command === 'mv') {
-        try {
-            await handleMvCommand(firstArg, secondArg);
-        } catch (error) {
-            console.error(error);
-        }
-
-        printWorkingDirectory();
-    } else if (command === 'rm') {
-        try {
-            await handleRmCommand(firstArg);
-        } catch (error) {
-            console.error(error);
-        }
-
-        printWorkingDirectory();
-    } else if (command === '.exit') {
-        printGreeting(true);
-    } else {
-        console.log('Invalid input\n');
+    } catch (error) {
+        console.error(error);
     }
+
+    printWorkingDirectory();
 });
 
 process.on('SIGINT', () => {
