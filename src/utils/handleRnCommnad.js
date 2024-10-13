@@ -8,9 +8,6 @@ const handleRnCommand = async (targetFilePath, newFileName) => {
 
     const newFilePath = join(dirname(targetFilePath), newFileName);
 
-    console.log(targetFilePath);
-    console.log(newFilePath);
-
     await rename(targetFilePath, newFilePath, (error) => {
         if (error) {
             throw error;
