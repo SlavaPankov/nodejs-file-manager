@@ -14,6 +14,7 @@ import handleRmCommand from './utils/handleRmCommand.js';
 import handleOsCommand from './utils/handleOsCommand.js';
 import handleHashCommand from './utils/handleHashCommand.js';
 import handleCompressCommand from './utils/handleCompressCommand.js';
+import handleDecompressCommand from './utils/handleDecompressCommand.js';
 
 process.stdin.resume();
 printGreeting();
@@ -63,6 +64,9 @@ process.stdin.on('data', async (input) => {
                 break;
             case 'compress':
                 await handleCompressCommand(firstArg, secondArg);
+                break;
+            case 'decompress':
+                await handleDecompressCommand(firstArg, secondArg);
                 break;
             case '.exit':
                 printGreeting(true);
