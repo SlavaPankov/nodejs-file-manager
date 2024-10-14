@@ -24,8 +24,7 @@ process.chdir(initailDir);
 
 printWorkingDirectory();
 process.stdin.on('data', async (input) => {
-    const trimmedInput = input.toString().trim();
-    const [command, firstArg, secondArg] = trimmedInput.split(' ');
+    const [command, firstArg, secondArg] = input.toString().trim().split(/\s+/);
 
     try {
         switch (command) {
@@ -42,7 +41,7 @@ process.stdin.on('data', async (input) => {
                 handleCatCommand(firstArg);
                 break;
             case 'add':
-                handleAddCommand(firstArg);
+                await handleAddCommand(firstArg);
                 break;
             case 'rn':
                 await handleRnCommand(firstArg, secondArg);
