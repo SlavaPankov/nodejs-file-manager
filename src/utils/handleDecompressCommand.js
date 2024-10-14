@@ -4,10 +4,11 @@ import { basename, resolve, join } from 'node:path';
 import { pipeline } from 'node:stream';
 import { promisify } from 'node:util';
 import { createBrotliDecompress } from 'node:zlib';
+import printWorkingDirectory from './printWorkingDirectory.js';
 
 const handleDecompressCommand = async (sourceFilePath, targetPath) => {
     if (!sourceFilePath || !targetPath) {
-        throw new Error('Operation failed');
+        throw new Error('Invalid input\n');
     }
 
     const absoluteSourcePath = resolve(sourceFilePath);
@@ -30,6 +31,7 @@ const handleDecompressCommand = async (sourceFilePath, targetPath) => {
         const pipe = promisify(pipeline);
 
         await pipe(readStream, brotliDecompress, writeStram);
+        printWorkingDirectory();
     } catch (error) {
         throw error;
     }

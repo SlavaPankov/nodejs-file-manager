@@ -1,9 +1,10 @@
 import { rename } from 'node:fs/promises';
 import { resolve, join, basename } from 'node:path';
+import printWorkingDirectory from './printWorkingDirectory.js';
 
 const handleMvCommand = async (sourceFilePath, targetFilePath) => {
     if (!sourceFilePath || !targetFilePath) {
-        throw new Error('Operation failed');
+        throw new Error('Invalid input\n');
     }
 
     const absoluteSourceFilePath = resolve(sourceFilePath);
@@ -15,6 +16,7 @@ const handleMvCommand = async (sourceFilePath, targetFilePath) => {
 
     try {
         await rename(absoluteSourceFilePath, newFilePath);
+        printWorkingDirectory();
     } catch (error) {
         throw error;
     }

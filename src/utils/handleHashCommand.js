@@ -1,10 +1,11 @@
 import { resolve } from 'node:path';
 import { createHash } from 'node:crypto';
 import { createReadStream } from 'node:fs';
+import printWorkingDirectory from './printWorkingDirectory.js';
 
 const handleHashCommand = async (filePath) => {
     if (!filePath) {
-        throw new Error('Operation failed');
+        throw new Error('Invalid input\n');
     }
 
     const absoluteFilePath = resolve(filePath);
@@ -19,10 +20,12 @@ const handleHashCommand = async (filePath) => {
     
         stream.on('end', () => {
             console.log(hash.digest('hex'));
+            printWorkingDirectory();
         });
 
-        stream.on('error', (error) => {
-            console.log(error);
+        stream.on('error', () => {
+            console.log('Operation failed');
+            printWorkingDirectory();
         })
     } catch (error) {
         throw error;

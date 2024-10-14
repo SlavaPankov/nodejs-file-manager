@@ -1,15 +1,16 @@
 import os from 'node:os';
+import printWorkingDirectory from './printWorkingDirectory.js';
 
 const getCPUInfo = () => {
     const cpus = os.cpus();
-  const cpuCount = cpus.length;
+    const cpuCount = cpus.length;
 
-  console.log(`Total number of CPUs: ${cpuCount}`);
+    console.log(`Total number of CPUs: ${cpuCount}`);
 
-  cpus.forEach((cpu, index) => {
-    const clockRateGHz = (cpu.speed / 1000).toFixed(2);
-    console.log(`CPU ${index + 1}: Model: ${cpu.model}, Speed: ${clockRateGHz} GHz`);
-  });
+    cpus.forEach((cpu, index) => {
+        const clockRateGHz = (cpu.speed / 1000).toFixed(2);
+        console.log(`CPU ${index + 1}: Model: ${cpu.model}, Speed: ${clockRateGHz} GHz`);
+    });    
 };
 
 const handleOsCommand = (flag) => {
@@ -38,6 +39,7 @@ const handleOsCommand = (flag) => {
                 throw new Error('Invalid input\n');
                 break;
         }
+        printWorkingDirectory();
     } catch (error) {
         throw error;
     }

@@ -1,5 +1,6 @@
 import process from 'node:process';
 import { dirname } from 'node:path';
+import printWorkingDirectory from './printWorkingDirectory.js';
 
 const handleUpCommand = () => {
     const currentDir = process.cwd();
@@ -11,6 +12,7 @@ const handleUpCommand = () => {
 
     try {
         process.chdir(parentDir);
+        printWorkingDirectory();
     } catch (error) {
         throw error;
     }

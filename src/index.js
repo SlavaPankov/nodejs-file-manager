@@ -3,6 +3,8 @@ import handleUpCommand from "./utils/handleUpCommand.js";
 import printGreeting from "./utils/printGreeting.js";
 import process from 'node:process';
 import os from 'node:os';
+import readline from 'node:readline';
+import changeQuotes from './utils/changeQuotes.js';
 import handleCdCommand from './utils/handleCdCommand.js';
 import handleLsCommand from './utils/handleLsCommand.js';
 import handleCatCommand from './utils/handleCatCommand.js';
@@ -22,9 +24,18 @@ printGreeting();
 const initailDir = os.homedir();
 process.chdir(initailDir);
 
+const rl = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout,
+})
+
 printWorkingDirectory();
-process.stdin.on('data', async (input) => {
-    const [command, firstArg, secondArg] = input.toString().trim().split(/\s+/);
+rl.on('line', async (input) => {
+    let [command, ...args] = input.toString().trim().split(/\s+/);
+
+    if (/"|'/g.test(args)) {
+        args = changeQuotes(args);
+    }
 
     try {
         switch (command) {
@@ -32,40 +43,40 @@ process.stdin.on('data', async (input) => {
                 handleUpCommand();
                 break;
             case 'cd':
-                await handleCdCommand(firstArg);
+                await handleCdCommand(args[0]);
                 break;
             case 'ls':
                 await handleLsCommand();
                 break;
             case 'cat':
-                handleCatCommand(firstArg);
+                await handleCatCommand(args[0]);
                 break;
             case 'add':
-                await handleAddCommand(firstArg);
+                await handleAddCommand(args[0]);
                 break;
             case 'rn':
-                await handleRnCommand(firstArg, secondArg);
+                await handleRnCommand(args[0], args[1]);
                 break;
             case 'cp':
-                await handleCpCommand(firstArg, secondArg);
+                await handleCpCommand(args[0], args[1]);
                 break;
             case 'mv':
-                await handleMvCommand(firstArg, secondArg);
+                await handleMvCommand(args[0], args[1]);
                 break;
             case 'rm':
-                await handleRmCommand(firstArg);
+                await handleRmCommand(args[0]);
                 break;
             case 'os':
-                handleOsCommand(firstArg);
+                handleOsCommand(args[0]);
                 break;
             case 'hash':
-                await handleHashCommand(firstArg);
+                await handleHashCommand(args[0]);
                 break;
             case 'compress':
-                await handleCompressCommand(firstArg, secondArg);
+                await handleCompressCommand(args[0], args[1]);
                 break;
             case 'decompress':
-                await handleDecompressCommand(firstArg, secondArg);
+                await handleDecompressCommand(args[0], args[1]);
                 break;
             case '.exit':
                 printGreeting(true);
@@ -73,16 +84,15 @@ process.stdin.on('data', async (input) => {
                 break;
             default:
                 console.error('Invalid input\n');
+                printWorkingDirectory();
                 break;
         }
-
     } catch (error) {
         console.error(error);
+        printWorkingDirectory();
     }
-
-    printWorkingDirectory();
 });
 
-process.on('SIGINT', () => {
+rl.on('SIGINT', () => {
     printGreeting(true);
-})
+});

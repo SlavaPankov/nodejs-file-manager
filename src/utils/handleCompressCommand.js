@@ -7,7 +7,7 @@ import { createBrotliCompress } from 'node:zlib';
 
 const handleCompressCommand = async (sourseFilePath, targetPath) => {
     if (!sourseFilePath || !targetPath) {
-        throw new Error('Operation failed');
+        throw new Error('Invalid input\n');
     }
 
     const absoluteSourcePath = resolve(sourseFilePath);

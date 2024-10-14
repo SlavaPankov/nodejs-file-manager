@@ -1,5 +1,6 @@
 import { cp } from 'node:fs/promises';
 import { basename, join, resolve } from 'node:path';
+import printWorkingDirectory from './printWorkingDirectory.js';
 
 const handleCpCommand = async (sourcePath, targetPath) => {
     if (!sourcePath || !targetPath) {
@@ -14,6 +15,7 @@ const handleCpCommand = async (sourcePath, targetPath) => {
 
     try {
         await cp(absoluteFilePath, newFilePath, { recursive: true });
+        printWorkingDirectory();
     } catch (error) {
         throw error;
     }

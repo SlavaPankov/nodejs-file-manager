@@ -1,4 +1,5 @@
 import { readdir } from 'node:fs/promises';
+import printWorkingDirectory from './printWorkingDirectory.js';
 
 export const handleLsCommand = async () => {
     try {
@@ -9,6 +10,7 @@ export const handleLsCommand = async () => {
         const sortedDirectoryContent = [...directories, ...filesInDirectory].map((item, index) => ({ Name: item.name, Type: item.isDirectory() ? 'directory' : 'file'  }));
 
         console.table(sortedDirectoryContent);
+        printWorkingDirectory();
     } catch (error) {
         throw error;
     }

@@ -2,7 +2,7 @@ import { createReadStream } from 'node:fs';
 import { resolve } from 'node:path';
 import printWorkingDirectory from './printWorkingDirectory.js';
 
-const handleCatCommand = (path) => {
+const handleCatCommand = async (path) => {
     try {
         const resolvedPath = resolve(path);
     
@@ -12,8 +12,12 @@ const handleCatCommand = (path) => {
             console.log(chunk);
         });
 
+        stream.on('end', () => {
+            printWorkingDirectory();
+        });
+
         stream.on('error', (error) => {
-            console.log(error);
+            console.error('Operation failed\n');
             printWorkingDirectory();
         });
     } catch (error) {
