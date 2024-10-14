@@ -14,7 +14,7 @@ const handleMvCommand = async (sourceFilePath, targetFilePath) => {
     const newFilePath = join(absoluteTargetFilePath, fileName);
 
     try {
-        rename(absoluteSourceFilePath, newFilePath);
+        await rename(absoluteSourceFilePath, newFilePath);
     } catch (error) {
         throw error;
     }

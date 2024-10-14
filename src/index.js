@@ -65,7 +65,7 @@ process.stdin.on('data', async (input) => {
 
                 break;
             default:
-                console.log('Invalid input\n');
+                console.error('Invalid input\n');
                 break;
         }
 

@@ -9,7 +9,7 @@ const handleRmCommand = async (filePath) => {
     const absoluteFilePath = resolve(filePath);
 
     try {
-        rm(absoluteFilePath);
+        await rm(absoluteFilePath);
     } catch (error) {
         throw error;
     }
