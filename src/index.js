@@ -13,6 +13,8 @@ import handleMvCommand from './utils/handleMvCommand.js';
 import handleRmCommand from './utils/handleRmCommand.js';
 import handleOsCommand from './utils/handleOsCommand.js';
 import handleHashCommand from './utils/handleHashCommand.js';
+import handleCompressCommand from './utils/handleCompressCommand.js';
+import handleDecompressCommand from './utils/handleDecompressCommand.js';
 
 process.stdin.resume();
 printGreeting();
@@ -22,8 +24,7 @@ process.chdir(initailDir);
 
 printWorkingDirectory();
 process.stdin.on('data', async (input) => {
-    const trimmedInput = input.toString().trim();
-    const [command, firstArg, secondArg] = trimmedInput.split(' ');
+    const [command, firstArg, secondArg] = input.toString().trim().split(/\s+/);
 
     try {
         switch (command) {
@@ -40,7 +41,7 @@ process.stdin.on('data', async (input) => {
                 handleCatCommand(firstArg);
                 break;
             case 'add':
-                handleAddCommand(firstArg);
+                await handleAddCommand(firstArg);
                 break;
             case 'rn':
                 await handleRnCommand(firstArg, secondArg);
@@ -59,6 +60,12 @@ process.stdin.on('data', async (input) => {
                 break;
             case 'hash':
                 await handleHashCommand(firstArg);
+                break;
+            case 'compress':
+                await handleCompressCommand(firstArg, secondArg);
+                break;
+            case 'decompress':
+                await handleDecompressCommand(firstArg, secondArg);
                 break;
             case '.exit':
                 printGreeting(true);
